@@ -31,9 +31,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.js",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ]
           },
           "configurations": {
             "production": {
@@ -127,5 +131,13 @@
       }
     }
   },
-  "defaultProject": "frontend-angular"
+  "defaultProject": "frontend-angular",
+  "cli": {
+    "analytics": "6005a8c0-c39b-4536-9086-5a88c508af89"
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "css"
+    }
+  }
 }
