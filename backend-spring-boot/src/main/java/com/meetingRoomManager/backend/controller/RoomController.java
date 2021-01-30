@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -66,12 +68,14 @@ public class RoomController {
     }
 
     @DeleteMapping("/rooms/{id}")
-    public void deleteRoom(@PathVariable (value = "id") Long roomId,
-                           @Valid @RequestBody Room roomDetails)
-                           throws ResourceNotFoundException {
+    public Map<String, Boolean> deleteRoom(@PathVariable (value = "id") Long roomId)
+                                            throws ResourceNotFoundException {
         Room room = roomRepository.findById(roomId)
                                   .orElseThrow(() ->
                                           new ResourceNotFoundException("Room not found :: " + roomId));
         roomRepository.delete(room);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("Deleted, ", Boolean.TRUE);
+        return response;
     }
 }
