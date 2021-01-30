@@ -1,7 +1,6 @@
 import { Room } from '../room';
 import { Component, OnInit, Input } from '@angular/core';
 import { RoomService } from '../room.service';
-import { RoomListComponent } from '../room-list/room-list.component';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,8 +10,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class RoomDetailsComponent implements OnInit {
 
-  id: number;
-  room: Room;
+  id!: number;
+  room!: Room;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -31,6 +30,6 @@ export class RoomDetailsComponent implements OnInit {
   }
 
   list(){
-    this.router.navigate(['rooms']);
+    this.router.navigate(['/rooms']);
   }
 }

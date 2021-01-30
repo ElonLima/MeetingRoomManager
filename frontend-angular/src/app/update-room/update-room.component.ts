@@ -10,10 +10,9 @@ import { RoomService } from '../room.service';
 })
 export class UpdateRoomComponent implements OnInit {
 
-  id: number;
-  room: Room;
+  id!: number;
+  room!: Room;
   submitted = false;
-
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,

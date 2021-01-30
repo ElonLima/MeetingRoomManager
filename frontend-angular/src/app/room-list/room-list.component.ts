@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Room } from '../room';
@@ -12,7 +11,7 @@ import { RoomService } from '../room.service';
 })
 
 export class RoomListComponent implements OnInit {
-  rooms: Observable<Room[]>;
+  rooms!: Observable<Room[]>;
 
   constructor(private roomService: RoomService,
               private router: Router) { }
@@ -22,7 +21,7 @@ export class RoomListComponent implements OnInit {
   }
 
   reloadData() {
-    this.rooms = this.roomService.getRoomList();
+    this.rooms = this.roomService.getRoomsList();
   }
 
   deleteRoom(id: number) {
