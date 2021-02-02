@@ -3,6 +3,7 @@ package com.meetingRoomManager.backend.controller;
 import com.meetingRoomManager.backend.exception.ResourceNotFoundException;
 import com.meetingRoomManager.backend.model.Room;
 import com.meetingRoomManager.backend.repository.RoomRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +31,8 @@ public class RoomControllerTest {
     @DisplayName("This should pass when the initial list of rooms is empty.")
     void shouldReturnEmptyListOfRooms() {
         RoomController roomController = new RoomController(roomRepository);
-        assertEquals(roomRepository.count(), 0);
+        assertEquals(0, roomRepository.count());
+
     }
 
     @Test
@@ -54,7 +56,7 @@ public class RoomControllerTest {
         Room firstSavedRoom = roomController.createRoom(firstRoom);
         roomController.updateRoom(firstSavedRoom.getId(), updatedRoom);
 
-        assertAll( () -> {
+    assertAll( () -> {
             assertEquals(roomRepository.getOne(firstSavedRoom.getId()).getName(), updatedRoom.getName());
             assertEquals(roomRepository.getOne(firstSavedRoom.getId()).getDate(), updatedRoom.getDate());
             assertEquals(roomRepository.getOne(firstSavedRoom.getId()).getStartHour(), updatedRoom.getStartHour());
@@ -62,11 +64,29 @@ public class RoomControllerTest {
         });
     }
 
-    //MÉTODO DELETE
-//    @Test
-//    @DisplayName("This should pass when ...")
-//    @Disabled("Not implemented yet.")
-//    void shouldDeleteRoom() {
-//
-//    }
+    @Test
+    @DisplayName("This should pass when specific rooms were properly deleted.")
+    void shouldDeleteRoom() throws ResourceNotFoundException {
+        RoomController roomController = new RoomController(roomRepository);
+
+        Room firstRoom = new Room(1L,"Name", "date", "starting hour", "ending hour");
+        Room secondRoom = new Room(1L, "Name", "date", "starting hour", "ending hour");
+        Room thirdRoom = new Room(1L, "Name", "date", "starting hour", "ending hour");
+
+        Room r1 = roomController.createRoom(firstRoom);
+        Room r2 = roomController.createRoom(secondRoom);
+        Room r3 = roomController.createRoom(thirdRoom);
+
+        assertEquals(3, roomRepository.count());
+
+        roomController.deleteRoom(r1.getId());
+        assertEquals(2, roomRepository.count());
+
+        roomController.deleteRoom(r3.getId());
+        assertEquals(1, roomRepository.count());
+
+        roomController.deleteRoom(r2.getId());
+        assertEquals(0, roomRepository.count());
+
+    }
 }
